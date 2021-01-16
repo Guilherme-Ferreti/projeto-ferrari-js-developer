@@ -109,11 +109,15 @@ if (authPage) {
 
         e.preventDefault();
 
+        const btnLogin = formAuthLogin.querySelector('button[type=submit]');
+        btnLogin.disabled = 'disabled';
+
         const values = getFormValues(formAuthLogin);
 
         auth.signInWithEmailAndPassword(values.email, values.password)
         .then(response => window.location.href = '/')
-        .catch(showAlertError(formAuthLogin));
-
+        .catch(showAlertError(formAuthLogin))
+        .finally(() => btnLogin.disabled = false);
+          
     });
 }
