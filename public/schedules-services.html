@@ -28,7 +28,7 @@
     
     <header id="header">
 
-        <div class="overlay"></div>
+        <div class="overlay" data-close="menu"></div>
         <a href="index.html#home"><img src="assets/images/ferrari-logo.svg" class="logo" alt="Logo Ferrari" /></a>
         <button type="button" id="btn-open">
             <svg id="menu-black-18dp" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
@@ -38,7 +38,7 @@
         </button>
         <div class="menu">
             <nav>
-                <button type="button" id="btn-close">
+                <button type="button" id="btn-close" data-close="menu">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0,0H24V24H0Z" fill="none"/><path d="M19,6.41,17.59,5,12,10.59,6.41,5,5,6.41,10.59,12,5,17.59,6.41,19,12,13.41,17.59,19,19,17.59,13.41,12Z"/></svg>
                 </button>
                 <ul>
@@ -84,45 +84,10 @@
 
             <form action="schedules-payment.html">
 
-                <div class="options">
+                <input type="hidden" name="schedule_at" />
+                <input type="hidden" name="option" />
 
-                    <label>
-                        <input type="checkbox" name="service" value="1" checked />
-                        <div class="square">
-                            <div></div>
-                        </div>
-                        <div class="content">
-                            <span class="name">Revisão</span>
-                            <span class="description">Verificação mínima necessária.</span>
-                            <span class="price">R$100,00</span>
-                        </div>
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="service" value="2" checked />
-                        <div class="square">
-                            <div></div>
-                        </div>
-                        <div class="content">
-                            <span class="name">Alinhamento</span>
-                            <span class="description">Alinhamento e balanceamento.</span>
-                            <span class="price">R$400,00</span>
-                        </div>
-                    </label>
-
-                    <label>
-                        <input type="checkbox" name="service" value="3" />
-                        <div class="square">
-                            <div></div>
-                        </div>
-                        <div class="content">
-                            <span class="name">Filtros</span>
-                            <span class="description">Troca do filtro de ar e combustível.</span>
-                            <span class="price">R$200,00</span>
-                        </div>
-                    </label>
-
-                </div>
+                <div class="options"></div>
 
                 <footer class="fixed">
                     <a href="javascript:history.back(-1)">Voltar</a>
@@ -141,69 +106,7 @@
 
                 <table>
 
-                    <tbody>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                        <tr>
-                            <td>Alinhamento</td>
-                            <td class="price">R$ 0,00</td>
-                        </tr>
-
-                    </tbody>
+                    <tbody></tbody>
 
                 </table>
 
