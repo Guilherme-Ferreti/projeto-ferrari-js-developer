@@ -211,9 +211,7 @@ if (authPage) {
         auth
             .verifyPasswordResetCode(oobCode)
             .then(() => auth.confirmPasswordReset(oobCode, password))
-            .then(() => {
-                window.location.href = '/';
-            })
+            .then(() => showAuthForm('login'))
             .catch(showAlertError(formReset))
             .finally(() => {
 
