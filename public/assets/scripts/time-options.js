@@ -1,6 +1,6 @@
 import { format, parse } from "date-fns";
 import firebase from './firebase-app';
-import { appendTemplate, getQueryString, setFormValues, getFormValues } from "./utils";
+import { appendTemplate, getQueryString, setFormValues, getFormValues, onSnapshotError } from "./utils";
 import { ptBR } from 'date-fns/locale';
 
 const renderTimeOptions = (context, timeOptions) => {
@@ -54,22 +54,27 @@ const validateSubmitForm = context => {
 
 document.querySelectorAll('#time-options').forEach(page => {
 
+    const auth = firebase.auth();
     const db = firebase.firestore();
 
-    db.collection('time-options').onSnapshot(snapshot => {
+    auth.onAuthStateChanged(user => {
 
-        const timeOptions = [];
-
-        snapshot.forEach(item => {
-
-            timeOptions.push(item.data());
-
-        });
-
-        renderTimeOptions(page, timeOptions);
-        
-        validateSubmitForm(page);
+        db.collection('time-options').onSnapshot(snapshot => {
+    
+            const timeOptions = [];
+    
+            snapshot.forEach(item => {
+    
+                timeOptions.push(item.data());
+    
+            });
+    
+            renderTimeOptions(page, timeOptions);
+            
+            validateSubmitForm(page);
+        }, onSnapshotError);
     });
+
 
     const params = getQueryString();
     const title = page.querySelector('h3');

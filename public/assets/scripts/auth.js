@@ -1,5 +1,5 @@
 import firebase from './firebase-app';
-import { getFormValues, hideAlertError, showAlertError } from './utils';
+import { getFormValues, getQueryString, hideAlertError, showAlertError } from './utils';
 
 const authPage = document.querySelector('main#auth');
 
@@ -45,8 +45,15 @@ if (authPage) {
                 break;
 
             default:
-                // showAuthForm('auth-email');
-                showAuthForm('login');
+
+                const params = getQueryString();
+
+                if(params.mode === 'resetPassword') {
+                    showAuthForm('reset');
+                } else {
+                    // showAuthForm('auth-email');
+                    showAuthForm('login');  
+                }
         }
     }
 
@@ -115,9 +122,98 @@ if (authPage) {
         const values = getFormValues(formAuthLogin);
 
         auth.signInWithEmailAndPassword(values.email, values.password)
-        .then(response => window.location.href = '/')
+        .then(response => {
+
+            const values = getQueryString();
+
+            if (values.url) {
+                window.location.href = `http://localhost:8080${values.url}`;
+
+            } else {
+
+                window.location.href = '/';
+            }
+
+        })
         .catch(showAlertError(formAuthLogin))
         .finally(() => btnLogin.disabled = false);
           
+    });
+
+    const formForget = document.querySelector('#forget');
+
+    formForget.addEventListener('submit', e => {
+
+        const btnSubmit = formForget.querySelector('[type=submit]');
+        const message = formForget.querySelector('.message');
+        const field = formForget.querySelector('.field');
+        const actions = formForget.querySelector('.actions');
+
+        e.preventDefault();
+
+        hideAlertError(formForget);
+
+        const values = getFormValues(formForget);
+
+        message.style.display = 'none';
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = 'Enviando...';
+
+        auth
+            .sendPasswordResetEmail(values.email)
+            .then(() => {
+
+                field.style.display = 'none';
+                actions.style.display = 'none';
+                message.style.display = 'flex';
+
+            })
+            .catch(error => {
+
+                field.style.display = 'flex';
+                actions.style.display = 'flex';
+
+                showAlertError(formForget)(error);
+
+            })
+            .finally(() => {
+
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Enviar';
+
+            });
+    });
+
+    const formReset = document.querySelector('#reset');
+
+    formReset.addEventListener('submit', e => {
+
+        e.preventDefault();
+
+        const btnSubmit = formForget.querySelector('[type=submit]');
+
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = 'Redefinindo...';
+
+        const { oobCode } = getQueryString();
+
+        const { password } = getFormValues(formReset);
+
+        hideAlertError(formReset);
+
+        auth
+            .verifyPasswordResetCode(oobCode)
+            .then(() => auth.confirmPasswordReset(oobCode, password))
+            .then(() => {
+                window.location.href = '/';
+            })
+            .catch(showAlertError(formReset))
+            .finally(() => {
+
+                btnSubmit.disabled = false;
+                btnSubmit.innerHTML = 'Redefinir';
+            });
+
     });
 }
